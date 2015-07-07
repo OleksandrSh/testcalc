@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} [%p] - %c{2}.%M(%L) - %m%n" />
+		</layout>
+	</appender>
+ 
+	<appender name="sqlLog" class="org.apache.log4j.RollingFileAppender">
+		<param name="MaxFileSize" value="100MB" />
+		<param name="MaxBackupIndex" value="2" />
+		<param name="file" value="OasisSQL.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} [%p] - %c{2}.%M(%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="snmpLog" class="org.apache.log4j.RollingFileAppender">
+		<param name="MaxFileSize" value="100MB" />
+		<param name="MaxBackupIndex" value="2" />
+		<param name="file" value="OasisSNMP.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} [%p] - %c{2}.%M(%L) - %m%n" />
+		</layout>
+	</appender> 
+	<appender name="thresholdLog" class="org.apache.log4j.RollingFileAppender">
+		<param name="MaxFileSize" value="100MB" />
+		<param name="MaxBackupIndex" value="2" />
+		<param name="file" value="OasisThreshold.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} [%p] - %c{2}.%M(%L) - %m%n" />
+		</layout>
+	</appender> 	
+	<appender name="httpLog" class="org.apache.log4j.RollingFileAppender">
+		<param name="MaxFileSize" value="100MB" />
+		<param name="MaxBackupIndex" value="2" />
+		<param name="file" value="OasisHTTP.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} [%p] - %c{2}.%M(%L) - %m%n" />
+		</layout>
+	</appender>
+ 
+	<appender name="rollingFile" class="org.apache.log4j.RollingFileAppender">
+		<param name="MaxFileSize" value="100MB" />
+		<param name="MaxBackupIndex" value="2" />
+		<param name="file" value="Oasis.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} [%p] - %c{2}.%M(%L) - %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="com.datastax">
+		<level value="error" />
+	</logger>
+	<logger name="cassandra">
+		<level value="error" />
+	</logger>
+	<logger name="metrics">
+		<level value="error" />
+	</logger>
+	
+	<logger name="SQL" additivity="false">
+		<level value="error" />
+		<appender-ref ref="sqlLog" />
+	</logger>
+
+	<logger name="SNMP" additivity="false">
+		<level value="error" />
+		<appender-ref ref="snmpLog" />
+	</logger>
+
+	<logger name="HTTP" additivity="false">
+		<level value="info" />
+		<appender-ref ref="httpLog" />
+	</logger>
+	
+	<logger name="THRESHOLDSYNC" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="thresholdLog" />
+	</logger>
+
+
+
+	<logger name="com.mchange">
+		<level value="info" />
+	</logger>
+	
+	<logger name="com.datastax">
+		<level value="error" />
+	</logger>
+	<logger name="cassandra">
+		<level value="error" />
+	</logger>
+	<logger name="com.codahale.metrics">
+		<level value="error" />
+	</logger>
+
+	<root>
+		<priority value="debug" />
+		<appender-ref ref="console" />
+	</root>
+
+</log4j:configuration>

@@ -1,0 +1,60 @@
+import org.apache.tools.ant.filters.*
+
+apply plugin: 'war'
+
+webAppDirName = 'WebContent'
+
+task karma_start(type:Exec){
+    commandLine 'karma', 'start', getPathToConf(), '--single-run true'
+}	
+
+def getPathToConf() {
+	def path = ('./' + webAppDirName + '/test/karma.conf.js')
+	return path
+}
+sourceCompatibility = 1.7
+version = '3.0.1'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'TestFront',
+                   'Implementation-Version': version
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'log4j:log4j:1.2.17'
+    testCompile 'junit:junit:4.10'
+}
+
+war {   
+   eachFile {
+      if (it.name == 'app.js') {
+        it.filter(ReplaceTokens, tokens: [buildDate: "Version: " + version+" (Build "+System.env["SVN_REVISION"]+" - " + getDate() + ")"])
+      }
+      String deployHost = System.properties["apiAddress"];
+      if (it.name == 'constants.js' && deployHost != null) {
+      	it.filter {
+      	 	String line ->
+        	line.replaceAll("(\\d{1,3}\\.){3}\\d{1,3}:\\d{1,5}\\/\\w*", deployHost).
+        		replaceAll("localhost:\\d{1,5}\\/\\w*", deployHost);
+        }
+      }      
+   }
+}
+ 
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy/MM/dd')
+    return formattedDate
+}
+
+jar {
+    baseName "TestFrontV"
+}
+
+
+

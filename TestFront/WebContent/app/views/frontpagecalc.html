@@ -1,0 +1,38 @@
+<div ng-controller="CalcFrontController" style="padding: 10px 0 0 20px">
+ <b class="calculate">Info block</b> <br />
+	Current API URL = {{calcUrl}} <br /> Current Numbers = {{calcNumbers}}
+	<br />  
+	{{expressions}}  <span ng-if="result" >={{result}}</span> <br />  
+	
+	<b class="calculate">Configuration
+		block</b>  <br />
+	<form name="myForm">
+		<label>Config it is API URL: <input type="text" size="100"
+			name="input" ng-model="calcUrl">
+		</label> <br /> <label>Config Numbers: <input type="text" size="50"
+			name="input" ng-pattern="onlyNumbers" ng-model="calcNumbers">
+		</label> <br /> {{myForm.number.$valid}}
+
+		<div role="alert">
+			<span class="error" ng-show="myForm.input.$error.pattern"> WOW
+				Error only number please</span>
+		</div>
+	</form>
+	<br /> <b class="calculate">Calculate and result block</b> <br /> <span ng-if="result" class="results">RESULT={{result}}</span> <br />
+
+	<div ng-repeat="i in getNumber(calcNumbers) track by $index">
+
+		<div>
+			Input please X{{$index}}: <input type="text" ng-pattern="onlyNumbers"
+				size="10" name="v{{$index}}" ng-model="datan[$index]">
+		</div>
+
+		<div ng-hide="$index==(calcNumbers-1)">
+		Input please Exp: <select ng-model="curop[$index]"
+				ng-options="opt as opt for opt in operators"
+				ng-init="curop[$index]='+'"></select>
+
+		</div>
+	</div>
+	<input type="submit" ng-click="getCalc()" />
+</div>
