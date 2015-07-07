@@ -30,7 +30,7 @@ public class CalculateServiceTest {
 		request.setExpressionsForCalculate("22+22+22+22+22");
 		assertEquals("110", calc.getDatas(request));
 		request.setExpressionsForCalculate("55/66-132*11+555");
-		assertEquals("-897 ",calc.getDatas(request));
+		assertEquals("-897",calc.getDatas(request));
 		request.setExpressionsForCalculate("200*66-132*11+555");
 		assertEquals("12303", calc.getDatas(request));
 	}
