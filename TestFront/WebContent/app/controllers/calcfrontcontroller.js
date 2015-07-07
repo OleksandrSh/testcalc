@@ -47,6 +47,7 @@
 				$scope.result="Sorry wrong expressions, check please e "+$scope.expressions+"and try again";
 			}else{
 			$scope.result=undefined;
+			calculateService.setCalculateUrl($scope.calcUrl);
 			data.parametrs.numbers = $scope.datan;
 			data.parametrs.actions = $scope.curop;
 			data.expressionsForCalculate=$scope.expressions;
